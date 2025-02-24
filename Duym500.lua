@@ -2,7 +2,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
 
        local Window = MakeWindow({
          Hub = {
-         Title = "Script tổng hợp by Duym500",
+         Title = "AllScript By Duym500",
          Animation = "Địt mẹ mày"
          },
         Key = {
@@ -21,7 +21,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
   })
 
        MinimizeButton({
-       Image = "http://www.roblox.com/asset/?id=99730496110492",
+       Image = "http://www.roblox.com/asset/?id=128933802535491",
        Size = {50, 50},
        Color = Color3.fromRGB(10, 10, 10),
        Corner = true,
@@ -195,7 +195,22 @@ getgenv().Configs = {
 }
 repeat task.wait() pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Xero2409/XeroHub/refs/heads/main/kaitun.lua"))() end) until getgenv().Check_Execute
   end
-  })     
+  })   AddButton(Tab1o, {
+     Name = "HoHo Hub",
+    Callback = function()
+	  loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI"))()
+  end
+  })   AddButton(Tab1o, {
+     Name = "Speed Hub",
+    Callback = function()
+	  loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()
+  end
+  })   AddButton(Tab1o, {
+     Name = "Alchemy Hub",
+    Callback = function()
+	  loadstring(game:HttpGet("https://scripts.alchemyhub.xyz"))()
+  end
+  }) 
 ----- Dropdown 
 
   Dropdown = AddDropdown(Tab1o, {
