@@ -3,7 +3,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
        local Window = MakeWindow({
          Hub = {
          Title = "Spaid Hub",
-         Animation = "Địt mẹ mày"
+         Animation = "Đợi tẹo nó sẽ lên"
          },
         Key = {
         KeySystem = false,
@@ -88,9 +88,9 @@ end)
 	  loadstring(game:HttpGet("https://raw.githubusercontent.com/AnDepZaiHub/AnBeoDepTrai/refs/heads/main/Rip_Indra"))()
   end
   })   AddButton(Tab1o, {
-     Name = "Auto Hop Server Katakuri",
+     Name = "Auto Hop Server Dough King",
     Callback = function()
-	  loadstring(game:HttpGet("https://raw.githubusercontent.com/AnDepZaiHub/AnBeoDepTrai/refs/heads/main/Rip_Indra"))()
+	  loadstring(game:HttpGet("https://raw.githubusercontent.com/AnDepZaiHub/AnBeoDepTrai/refs/heads/main/Dough_King"))()
   end
   })   AddButton(Tab1o, {
      Name = "Auto Phá Acc",
