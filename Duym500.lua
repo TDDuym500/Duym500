@@ -142,10 +142,6 @@ loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/3b2169cf53bc61
     Callback = function()
 	  loadstring(game:HttpGet("https://raw.githubusercontent.com/IAmJamal10/Scripts/refs/heads/main/BlueLocksNew"))()
   end
-  })   AddButton(Tab5o, {
-     Name = "Discord:https://discord.gg/vRgzWnhQ",
-    Callback = function() 
-  end  
   })     AddButton(Tab4o, {
      Name = "Alchemy Hub",
     Callback = function()
@@ -226,6 +222,18 @@ repeat task.wait() pcall(function() loadstring(game:HttpGet("https://raw.githubu
     Callback = function()
 	  loadstring(game:HttpGet("https://scripts.alchemyhub.xyz"))()
   end
+  })   AddButton(Tab5o, {
+     Name = "Duym500",
+    Callback = function() 
+  end  
+  })   AddButton(Tab5o, {
+     Name = "User Name Roblox: Duym500",
+    Callback = function() 
+  end  
+  })   AddButton(Tab5o, {
+     Name = "Discord:https://discord.gg/vRgzWnhQ",
+    Callback = function() 
+  end  
   }) 
 ----- Dropdown 
 
@@ -239,9 +247,9 @@ repeat task.wait() pcall(function() loadstring(game:HttpGet("https://raw.githubu
 
 ----- Section 
    
-   Section = AddSection(Tab1o, {"a"})          
+   Section = AddSection(Tab1o, {"Wait Update"})          
 
 ----- Paragraph 
                     
-   Paragraph = AddParagraph(Farm, {"a", ""})
+   Paragraph = AddParagraph(Farm, {"", "Wait Update"})
    
