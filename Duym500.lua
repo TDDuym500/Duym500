@@ -3,7 +3,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
        local Window = MakeWindow({
          Hub = {
          Title = "Spaid Hub",
-         Animation = "Đợi tẹo nó sẽ lên"
+         Animation = "Địt mẹ mày"
          },
         Key = {
         KeySystem = false,
@@ -221,17 +221,18 @@ repeat task.wait() pcall(function() loadstring(game:HttpGet("https://raw.githubu
      Name = "Alchemy Hub",
     Callback = function()
 	  loadstring(game:HttpGet("https://scripts.alchemyhub.xyz"))()
-  end
+  end   AddButton(Tab2o, {
+     Name = "AnDepZaiHub",
+     loadstring(game:HttpGet("https://raw.githubusercontent.com/AnDepZaiHub/AnDepZaiHubBeta/main/AnDepZaiHubBeta.lua"))()
+    Callback = function() 
+  end  
+  })
   })   AddButton(Tab5o, {
      Name = "Duym500",
     Callback = function() 
   end  
   })   AddButton(Tab5o, {
      Name = "User Name Roblox: Duym500",
-    Callback = function() 
-  end  
-  })   AddButton(Tab5o, {
-     Name = "Discord:https://discord.gg/vRgzWnhQ",
     Callback = function() 
   end  
   }) 
