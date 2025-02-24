@@ -2,7 +2,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
 
        local Window = MakeWindow({
          Hub = {
-         Title = "AllScript By Duym500",
+         Title = "Spaid Hub",
          Animation = "Địt mẹ mày"
          },
         Key = {
@@ -30,10 +30,11 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
       })
       
 ------ Tab
-     local Tab1o = MakeTab({Name = "Script BF"})
-     local Tab2o = MakeTab({Name = "Script KaitunBF"})
-     local Tab3o = MakeTab({Name = "Script blue lock"})
-     local Tab4o = MakeTab({Name = "Cre"})
+     local Tab1o = MakeTab({Name = "Main"})
+     local Tab2o = MakeTab({Name = "Hack BF"})
+     local Tab3o = MakeTab({Name = "KaitunBF"})
+     local Tab4o = MakeTab({Name = "Hack blue lock"})
+     local Tab5o = MakeTab({Name = "Cre"})
      
 -------TOGGLE 
 
@@ -81,8 +82,23 @@ end)
     })
     
 ------- BUTTON
-    
-    AddButton(Tab1o, {
+       AddButton(Tab1o, {
+     Name = "Auto Hop Server Rip Indra",
+    Callback = function()
+	  loadstring(game:HttpGet("https://raw.githubusercontent.com/AnDepZaiHub/AnBeoDepTrai/refs/heads/main/Rip_Indra"))()
+  end
+  })   AddButton(Tab1o, {
+     Name = "Auto Hop Server Katakuri",
+    Callback = function()
+	  loadstring(game:HttpGet("https://raw.githubusercontent.com/AnDepZaiHub/AnBeoDepTrai/refs/heads/main/Rip_Indra"))()
+  end
+  })   AddButton(Tab1o, {
+     Name = "Auto Phá Acc",
+    Callback = function()
+	  loadstring(game:HttpGet("https://raw.githubusercontent.com/AnDepZaiHub/AnDepZaiHubBeta/refs/heads/main/Kaitun.txt"))()
+  end
+  })
+    AddButton(Tab2o, {
      Name = "W azure",
     Callback = function()
 	  getgenv().Team = "Marines" --Marines Pirates
@@ -93,12 +109,12 @@ getgenv().ForceUseWalkSpeedModifier = true --Force turn on Walk Speed Modifier ,
 loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/3b2169cf53bc6104dabe8e19562e5cc2.lua"))()
   end
   })
-     AddButton(Tab1o, {
+     AddButton(Tab2o, {
      Name = "Redz Hub",
     Callback = function()
 	  loadstring(game:HttpGet("https://raw.githubusercontent.com/realredz/BloxFruits/refs/heads/main/Source.lua"))()
   end
-  })   AddButton(Tab1o, {
+  })   AddButton(Tab2o, {
      Name = "Xero Hub",
     Callback = function()
 	  getgenv().Team = "Marines"
@@ -106,36 +122,36 @@ loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/3b2169cf53bc61
     getgenv().Auto_Execute = false
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Xero2409/XeroHub/refs/heads/main/main.lua"))()
   end
-  })   AddButton(Tab1o, {
+  })   AddButton(Tab2o, {
      Name = "Script Fix lag",
     Callback = function()
 	  loadstring(game:HttpGet("https://raw.githubusercontent.com/TurboLite/Script/main/FixLag.lua"))()
   end
-  })   AddButton(Tab1o, {
+  })   AddButton(Tab2o, {
      Name = "Bapred Hub",
     Callback = function()
 	  loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/BapRed/main/BapRedHub"))()
   end
-  })   AddButton(Tab1o, {
+  })   AddButton(Tab2o, {
      Name = "Script Fly",
     Callback = function()
 	  loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\40\39\104\116\116\112\115\58\47\47\103\105\115\116\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\109\101\111\122\111\110\101\89\84\47\98\102\48\51\55\100\102\102\57\102\48\97\55\48\48\49\55\51\48\52\100\100\100\54\55\102\100\99\100\51\55\48\47\114\97\119\47\101\49\52\101\55\52\102\52\50\53\98\48\54\48\100\102\53\50\51\51\52\51\99\102\51\48\98\55\56\55\48\55\52\101\98\51\99\53\100\50\47\97\114\99\101\117\115\37\50\53\50\48\120\37\50\53\50\48\102\108\121\37\50\53\50\48\50\37\50\53\50\48\111\98\102\108\117\99\97\116\111\114\39\41\44\116\114\117\101\41\41\40\41\10\10")()
   end
-  })   AddButton(Tab3o, {
+  })   AddButton(Tab4o, {
      Name = "Legend HandlesYT(cần key)",
     Callback = function()
 	  loadstring(game:HttpGet("https://raw.githubusercontent.com/IAmJamal10/Scripts/refs/heads/main/BlueLocksNew"))()
   end
-  })   AddButton(Tab4o, {
+  })   AddButton(Tab5o, {
      Name = "Discord:https://discord.gg/vRgzWnhQ",
     Callback = function() 
   end  
-  })     AddButton(Tab3o, {
+  })     AddButton(Tab4o, {
      Name = "Alchemy Hub",
     Callback = function()
 	  loadstring(game:HttpGet("https://scripts.alchemyhub.xyz"))()
   end
-  })       AddButton(Tab2o, {
+  })       AddButton(Tab3o, {
      Name = "Kaitun Xero",
     Callback = function()
 	  -- Max level, godhuman, cdk, sgt
@@ -195,17 +211,17 @@ getgenv().Configs = {
 }
 repeat task.wait() pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Xero2409/XeroHub/refs/heads/main/kaitun.lua"))() end) until getgenv().Check_Execute
   end
-  })   AddButton(Tab1o, {
+  })   AddButton(Tab2o, {
      Name = "HoHo Hub",
     Callback = function()
 	  loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI"))()
   end
-  })   AddButton(Tab1o, {
+  })   AddButton(Tab2o, {
      Name = "Speed Hub",
     Callback = function()
 	  loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()
   end
-  })   AddButton(Tab1o, {
+  })   AddButton(Tab2o, {
      Name = "Alchemy Hub",
     Callback = function()
 	  loadstring(game:HttpGet("https://scripts.alchemyhub.xyz"))()
