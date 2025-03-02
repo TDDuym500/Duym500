@@ -12,7 +12,7 @@ ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
 --// Khung chọn người chơi
 local Dropdown = Instance.new("Frame")
 Dropdown.Parent = ScreenGui
-Dropdown.Size = UDim2.new(0, 200, 0, 120)
+Dropdown.Size = UDim2.new(0, 150, 0, 90)
 Dropdown.Position = UDim2.new(0.05, 0, 0.1, 0)
 Dropdown.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 
@@ -41,7 +41,7 @@ UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 --// Nút Fly
 local FlyButton = Instance.new("TextButton")
 FlyButton.Parent = ScreenGui
-FlyButton.Size = UDim2.new(0, 200, 0, 40)
+FlyButton.Size = UDim2.new(0, 150, 0, 40)
 FlyButton.Position = UDim2.new(0.05, 0, 0.35, 0)
 FlyButton.Text = "Fly to Player"
 FlyButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
@@ -52,7 +52,7 @@ FlyButton.TextSize = 18
 --// Thanh chỉnh tốc độ
 local SpeedSlider = Instance.new("TextBox")
 SpeedSlider.Parent = ScreenGui
-SpeedSlider.Size = UDim2.new(0, 200, 0, 40)
+SpeedSlider.Size = UDim2.new(0, 150, 0, 40)
 SpeedSlider.Position = UDim2.new(0.05, 0, 0.45, 0)
 SpeedSlider.Text = "Speed: 3"
 SpeedSlider.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -64,10 +64,11 @@ SpeedSlider.TextSize = 18
 local selectedPlayer = nil
 local flySpeed = 3
 local flying = false
-local heightOffset = 10  -- Độ cao giữ nguyên khi bay
+local heightOffset = 10
 local flyConnection = nil
 local noClipConnection = nil
-local aimbotEnabled = false  -- Biến trạng thái aimbot
+local aimbotEnabled = false
+local aimbotConnection = nil
 
 --// Cập nhật danh sách người chơi
 local function UpdatePlayerList()
@@ -97,13 +98,11 @@ local function UpdatePlayerList()
     end
 end
 
---// Mở danh sách người chơi
 PlayerSelect.MouseButton1Click:Connect(function()
     PlayerList.Visible = not PlayerList.Visible
     UpdatePlayerList()
 end)
 
---// Cập nhật tốc độ từ thanh chỉnh
 SpeedSlider.FocusLost:Connect(function()
     local newSpeed = tonumber(SpeedSlider.Text:match("%d+"))
     if newSpeed and newSpeed > 0 then
@@ -114,7 +113,6 @@ SpeedSlider.FocusLost:Connect(function()
     end
 end)
 
---// NoClip (chỉ hoạt động khi bay)
 local function EnableNoClip()
     if noClipConnection then return end
     noClipConnection = RunService.Stepped:Connect(function()
@@ -133,21 +131,6 @@ local function DisableNoClip()
     end
 end
 
---// Aimbot (nút bật/tắt aimbot camera)
-local function AimbotCamera()
-    if selectedPlayer and selectedPlayer.Character then
-        local targetHRP = selectedPlayer.Character:FindFirstChild("HumanoidRootPart")
-        if targetHRP then
-            local lookAtPosition = targetHRP.Position
-            local camera = game.Workspace.CurrentCamera
-            if aimbotEnabled then
-                camera.CFrame = CFrame.new(camera.CFrame.Position, lookAtPosition)
-            end
-        end
-    end
-end
-
---// Bay đến người chơi theo tốc độ chỉnh
 local function FlyToPlayer()
     if flying then
         flying = false
@@ -175,21 +158,38 @@ local function FlyToPlayer()
 
                 HumanoidRootPart.Velocity = Vector3.zero
                 HumanoidRootPart.CFrame = CFrame.new(newPosition, targetHRP.Position)
-
-                -- Cập nhật aimbot khi bay
-                AimbotCamera()
             end)
         end
     end
 end
 
---// Kích hoạt bay khi bấm nút
 FlyButton.MouseButton1Click:Connect(FlyToPlayer)
 
---// Nút bật/tắt aimbot
+--// Aimbot hoạt động riêng biệt
+local function EnableAimbot()
+    if aimbotConnection or not selectedPlayer then return end
+
+    aimbotConnection = RunService.RenderStepped:Connect(function()
+        if selectedPlayer and selectedPlayer.Character then
+            local targetHRP = selectedPlayer.Character:FindFirstChild("HumanoidRootPart")
+            if targetHRP then
+                local camera = game.Workspace.CurrentCamera
+                camera.CFrame = CFrame.new(camera.CFrame.Position, targetHRP.Position)
+            end
+        end
+    end)
+end
+
+local function DisableAimbot()
+    if aimbotConnection then
+        aimbotConnection:Disconnect()
+        aimbotConnection = nil
+    end
+end
+
 local AimbotButton = Instance.new("TextButton")
 AimbotButton.Parent = ScreenGui
-AimbotButton.Size = UDim2.new(0, 200, 0, 40)
+AimbotButton.Size = UDim2.new(0, 150, 0, 40)
 AimbotButton.Position = UDim2.new(0.05, 0, 0.55, 0)
 AimbotButton.Text = "Toggle Aimbot"
 AimbotButton.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
@@ -201,14 +201,88 @@ AimbotButton.MouseButton1Click:Connect(function()
     aimbotEnabled = not aimbotEnabled
     if aimbotEnabled then
         AimbotButton.Text = "Aimbot: ON"
+        EnableAimbot()
     else
         AimbotButton.Text = "Aimbot: OFF"
+        DisableAimbot()
     end
 end)
 
---// Auto reset danh sách khi có người vào/ra
+--// Hàm cập nhật nhân vật sau khi chết
+local function UpdateCharacter()
+    local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+end
+
+--// Biến kiểm soát NoClip
+local noClipEnabled = false
+local noClipConnection = nil
+
+--// Hàm bật NoClip
+local function EnableNoClip()
+    if noClipEnabled then return end
+    noClipEnabled = true
+
+    noClipConnection = RunService.Stepped:Connect(function()
+        if noClipEnabled and Character then
+            for _, part in pairs(Character:GetChildren()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = false
+                end
+            end
+        end
+    end)
+end
+
+--// Hàm tắt NoClip
+local function DisableNoClip()
+    if noClipEnabled then
+        noClipEnabled = false
+        if noClipConnection then
+            noClipConnection:Disconnect()
+            noClipConnection = nil
+        end
+    end
+end
+
+--// Gọi NoClip đúng lúc khi bật/tắt bay
+local function FlyToPlayer()
+    if flying then
+        flying = false
+        DisableNoClip() -- 🛑 Tắt NoClip khi ngừng bay
+        if flyConnection then
+            flyConnection:Disconnect()
+            flyConnection = nil
+        end
+        return
+    end
+
+    if selectedPlayer and selectedPlayer.Character then
+        local targetHRP = selectedPlayer.Character:FindFirstChild("HumanoidRootPart")
+        if targetHRP then
+            flying = true
+            EnableNoClip() -- ✅ Bật NoClip khi bay
+
+            flyConnection = RunService.RenderStepped:Connect(function(deltaTime)
+                if not flying or not targetHRP or not HumanoidRootPart then return end
+
+                local direction = (targetHRP.Position - HumanoidRootPart.Position).unit
+                local moveDistance = flySpeed * deltaTime
+                local newPosition = HumanoidRootPart.Position + direction * moveDistance
+                newPosition = Vector3.new(newPosition.X, targetHRP.Position.Y + heightOffset, newPosition.Z)
+
+                HumanoidRootPart.Velocity = Vector3.zero
+                HumanoidRootPart.CFrame = CFrame.new(newPosition, targetHRP.Position)
+            end)
+        end
+    end
+end
+
+
+--// Kết nối sự kiện khi nhân vật respawn
+LocalPlayer.CharacterAdded:Connect(UpdateCharacter)
 Players.PlayerAdded:Connect(UpdatePlayerList)
 Players.PlayerRemoving:Connect(UpdatePlayerList)
-
---// Gọi cập nhật danh sách lần đầu
 UpdatePlayerList()
+--// Cập nhật nhân vật lần đầu khi chạy code
+UpdateCharacter()
