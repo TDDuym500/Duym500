@@ -1,4 +1,4 @@
---// Dịch vụ cần thiết
+-// Dịch vụ cần thiết
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -11,7 +11,7 @@ local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 
 --// Biến lưu trữ
 local isFlyingUp = false
-local flightSpeed = 5 -- Tốc độ bay lên
+local flightSpeed = 325 -- Tốc độ bay lên
 local flyConnection = nil
 
 --// Hàm bay lên vô hạn khi máu thấp
@@ -66,14 +66,8 @@ LocalPlayer.CharacterAdded:Connect(function(newCharacter)
 
         if healthPercentage <= 40 then
             StartFlyingUp()
-        elseif healthPercentage >= 100 then
+        elseif healthPercentage >= 85 then
             StopFlyingUp()
         end
     end)
 end)
-
-
---// Khi nhân vật mới xuất hiện (tức là sau khi chết)
-LocalPlayer.CharacterAdded:Connect(function(newCharacter)
-    Character = newCharacter
-    HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
