@@ -43,40 +43,80 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
       Default = true,
       Callback = function()
       local module = {
-  NextAttack = 0,
-  Distance = 55,
-  attackMobs = true,
-  attackPlayers = true
+    NextAttack = 0,
+    AttackCooldown = 0.001, -- Thời gian chờ giữa các đòn đánh
+    Distance = 55,
+    attackMobs = true,
+    attackPlayers = true
 }
 
-local Player = game:GetService("Players")
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+local RunService = game:GetService("RunService")
 
 function module:GetBladeHits()
-  local BladeHits = {}
-  
-  for _, Enemy in game:GetService("Workspace").Enemies:GetChildren() do
-    if Enemy:FindFirstChild("HumanoidRootPart") then
-      table.insert(BladeHits, Enemy.HumanoidRootPart)
+    local BladeHits = {}
+    local LocalPlayer = Players.LocalPlayer
+    local PlayerCharacter = LocalPlayer and LocalPlayer.Character
+
+    if not PlayerCharacter or not PlayerCharacter:FindFirstChild("HumanoidRootPart") then
+        return BladeHits
     end
-  end
-  
-  return BladeHits
+
+    local PlayerRoot = PlayerCharacter.HumanoidRootPart
+
+    -- 🟢 **Tấn công kẻ địch (Mobs)**
+    if module.attackMobs then
+        for _, Enemy in Workspace.Enemies:GetChildren() do
+            if Enemy:FindFirstChild("HumanoidRootPart") and Enemy:FindFirstChild("Humanoid") then
+                local RootPart = Enemy.HumanoidRootPart
+                local Humanoid = Enemy.Humanoid
+
+                if (PlayerRoot.Position - RootPart.Position).Magnitude <= module.Distance and Humanoid.Health > 0 then
+                    table.insert(BladeHits, RootPart)
+                end
+            end
+        end
+    end
+
+    -- 🔴 **Tấn công người chơi khác**
+    if module.attackPlayers then
+        for _, Player in Players:GetPlayers() do
+            if Player ~= LocalPlayer and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+                local RootPart = Player.Character.HumanoidRootPart
+                local Humanoid = Player.Character:FindFirstChild("Humanoid")
+
+                if Humanoid and Humanoid.Health > 0 and (PlayerRoot.Position - RootPart.Position).Magnitude <= module.Distance then
+                    table.insert(BladeHits, RootPart)
+                end
+            end
+        end
+    end
+
+    return BladeHits
 end
 
 function module:attack()
-  local BladeHits = self:GetBladeHits()
-  
-  game:GetService("ReplicatedStorage").Modules.Net:WaitForChild("RE/RegisterAttack"):FireServer(0)
-  
-  for _, Hit in BladeHits do
-    game:GetService("ReplicatedStorage").Modules.Net:WaitForChild("RE/RegisterHit"):FireServer(Hit)
-  end
+    local CurrentTime = tick()
+    if CurrentTime - module.NextAttack >= module.AttackCooldown then
+        module.NextAttack = CurrentTime
+        
+        local BladeHits = self:GetBladeHits()
+
+        -- Gửi lệnh tấn công
+        ReplicatedStorage.Modules.Net:WaitForChild("RE/RegisterAttack"):FireServer(0)
+
+        -- Gửi lệnh đánh từng mục tiêu hợp lệ
+        for _, Hit in BladeHits do
+            ReplicatedStorage.Modules.Net:WaitForChild("RE/RegisterHit"):FireServer(Hit)
+        end
+    end
 end
 
-spawn(function()
-  while wait(0.05) do -- Tăng tốc độ tấn công bằng cách giảm thời gian chờ
+-- Sử dụng RunService để tối ưu thay vì spawn()
+RunService.RenderStepped:Connect(function()
     module:attack()
-  end
 end)
      end
     })
