@@ -275,7 +275,7 @@ local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 
 --// Biến lưu trữ
 local isFlyingUp = false
-local flightSpeed = 5 -- Tốc độ bay lên
+local flightSpeed = 325 -- Tốc độ bay lên
 local flyConnection = nil
 
 --// Hàm bay lên vô hạn khi máu thấp
@@ -312,7 +312,7 @@ Humanoid.HealthChanged:Connect(function(health)
 
     if healthPercentage <= 40 then
         StartFlyingUp()
-    elseif healthPercentage >= 100 then
+    elseif healthPercentage >= 85 then
         StopFlyingUp()
     end
 end)
