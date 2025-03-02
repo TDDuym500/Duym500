@@ -3,7 +3,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
        local Window = MakeWindow({
          Hub = {
          Title = "Spaid Hub",
-         Animation = "Địt mẹ mày"
+         Animation = "Waitttttttttt"
          },
         Key = {
         KeySystem = false,
@@ -42,16 +42,15 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
       Name = "Chế độ đẹp zai",
       Default = true,
       Callback = function()
-		end
+      end
      })
 ------- BUTTON
    AddButton(Tab1o, {
-     Name = "FastAttack,
+     Name = "FastAttack",
     Callback = function()
 	  loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/FastAttack.lua"))()
   end
-  })
-       AddButton(Tab1o, {
+  })    AddButton(Tab1o, {
      Name = "Auto Hop Server Rip Indra",
     Callback = function()
 	  loadstring(game:HttpGet("https://raw.githubusercontent.com/AnDepZaiHub/AnBeoDepTrai/refs/heads/main/Rip_Indra"))()
