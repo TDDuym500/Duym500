@@ -39,89 +39,17 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
 -------TOGGLE 
 
      Toggle = AddToggle(Tab1o, {
-      Name = "Fast attack",
+      Name = "Chế độ đẹp zai",
       Default = true,
       Callback = function()
-      local module = {
-    NextAttack = 0,
-    AttackCooldown = 0.001, -- Thời gian chờ giữa các đòn đánh
-    Distance = 55,
-    attackMobs = true,
-    attackPlayers = true
-}
-
-local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Workspace = game:GetService("Workspace")
-local RunService = game:GetService("RunService")
-
-function module:GetBladeHits()
-    local BladeHits = {}
-    local LocalPlayer = Players.LocalPlayer
-    local PlayerCharacter = LocalPlayer and LocalPlayer.Character
-
-    if not PlayerCharacter or not PlayerCharacter:FindFirstChild("HumanoidRootPart") then
-        return BladeHits
-    end
-
-    local PlayerRoot = PlayerCharacter.HumanoidRootPart
-
-    -- 🟢 **Tấn công kẻ địch (Mobs)**
-    if module.attackMobs then
-        for _, Enemy in Workspace.Enemies:GetChildren() do
-            if Enemy:FindFirstChild("HumanoidRootPart") and Enemy:FindFirstChild("Humanoid") then
-                local RootPart = Enemy.HumanoidRootPart
-                local Humanoid = Enemy.Humanoid
-
-                if (PlayerRoot.Position - RootPart.Position).Magnitude <= module.Distance and Humanoid.Health > 0 then
-                    table.insert(BladeHits, RootPart)
-                end
-            end
-        end
-    end
-
-    -- 🔴 **Tấn công người chơi khác**
-    if module.attackPlayers then
-        for _, Player in Players:GetPlayers() do
-            if Player ~= LocalPlayer and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-                local RootPart = Player.Character.HumanoidRootPart
-                local Humanoid = Player.Character:FindFirstChild("Humanoid")
-
-                if Humanoid and Humanoid.Health > 0 and (PlayerRoot.Position - RootPart.Position).Magnitude <= module.Distance then
-                    table.insert(BladeHits, RootPart)
-                end
-            end
-        end
-    end
-
-    return BladeHits
-end
-
-function module:attack()
-    local CurrentTime = tick()
-    if CurrentTime - module.NextAttack >= module.AttackCooldown then
-        module.NextAttack = CurrentTime
-        
-        local BladeHits = self:GetBladeHits()
-
-        -- Gửi lệnh tấn công
-        ReplicatedStorage.Modules.Net:WaitForChild("RE/RegisterAttack"):FireServer(0)
-
-        -- Gửi lệnh đánh từng mục tiêu hợp lệ
-        for _, Hit in BladeHits do
-            ReplicatedStorage.Modules.Net:WaitForChild("RE/RegisterHit"):FireServer(Hit)
-        end
-    end
-end
-
--- Sử dụng RunService để tối ưu thay vì spawn()
-RunService.RenderStepped:Connect(function()
-    module:attack()
-end)
-     end
-    })
-    
+     })
 ------- BUTTON
+   AddButton(Tab1o, {
+     Name = "FastAttack,
+    Callback = function()
+	  loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/FastAttack.lua"))()
+  end
+  })
        AddButton(Tab1o, {
      Name = "Auto Hop Server Rip Indra",
     Callback = function()
@@ -247,12 +175,13 @@ getgenv().Configs = {
 }
 repeat task.wait() pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Xero2409/XeroHub/refs/heads/main/kaitun.lua"))() end) until getgenv().Check_Execute
   end
-  })   AddButton(Tab2o, {
+  })AddButton(Tab2o, {
      Name = "HoHo Hub",
     Callback = function()
-	  loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI"))()
+	  loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()
   end
-  })   AddButton(Tab2o, {
+  })
+   AddButton(Tab2o, {
      Name = "Speed Hub",
     Callback = function()
 	  loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()
