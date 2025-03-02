@@ -48,7 +48,7 @@ Humanoid.HealthChanged:Connect(function(health)
 
     if healthPercentage <= 40 then
         StartFlyingUp()
-    elseif healthPercentage >= 100 then
+    elseif healthPercentage >= 85 then
         StopFlyingUp()
     end
 end)
@@ -66,7 +66,7 @@ LocalPlayer.CharacterAdded:Connect(function(newCharacter)
 
         if healthPercentage <= 40 then
             StartFlyingUp()
-        elseif healthPercentage >= 85 then
+        elseif healthPercentage >= 100 then
             StopFlyingUp()
         end
     end)
