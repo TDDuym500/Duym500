@@ -24,7 +24,7 @@ function module:GetBladeHits()
 
     -- 🟢 Tấn công kẻ địch (Mobs)
     if module.attackMobs then
-        for , Enemy in Workspace.Enemies:GetChildren() do
+        for _, Enemy in ipairs(Workspace.Enemies:GetChildren()) do
             if Enemy:FindFirstChild("HumanoidRootPart") and Enemy:FindFirstChild("Humanoid") then
                 local RootPart = Enemy.HumanoidRootPart
                 local Humanoid = Enemy.Humanoid
@@ -38,7 +38,7 @@ function module:GetBladeHits()
 
     -- 🔴 Tấn công người chơi khác
     if module.attackPlayers then
-        for , Player in Players:GetPlayers() do
+        for _, Player in ipairs(Players:GetPlayers()) do
             if Player ~= LocalPlayer and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
                 local RootPart = Player.Character.HumanoidRootPart
                 local Humanoid = Player.Character:FindFirstChild("Humanoid")
@@ -64,7 +64,7 @@ function module:attack()
         ReplicatedStorage.Modules.Net:WaitForChild("RE/RegisterAttack"):FireServer(0)
 
         -- Gửi lệnh đánh từng mục tiêu hợp lệ
-        for _, Hit in BladeHits do
+        for _, Hit in ipairs(BladeHits) do
             ReplicatedStorage.Modules.Net:WaitForChild("RE/RegisterHit"):FireServer(Hit)
         end
     end
