@@ -48,7 +48,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
    AddButton(Tab1o, {
      Name = "FastAttack",
     Callback = function()
-	  loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/FastAttack.lua"))()
+         loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/FastAttack.lua"))()
   end
   })    AddButton(Tab1o, {
      Name = "Auto Hop Server Rip Indra",
