@@ -42,6 +42,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
       Name = "Chế độ đẹp zai",
       Default = true,
       Callback = function()
+		end
      })
 ------- BUTTON
    AddButton(Tab1o, {
