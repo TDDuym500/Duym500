@@ -1,6 +1,6 @@
 local module = {
     NextAttack = 0,
-    AttackCooldown = 0.1, -- Thời gian chờ giữa các đòn đánh
+    AttackCooldown = 0.01, -- Thời gian chờ giữa các đòn đánh
     Distance = 55,
     attackMobs = true,
     attackPlayers = true
