@@ -95,7 +95,7 @@ RunService.RenderStepped:Connect(function()
             if obj:IsA("Model") and obj ~= character and obj:FindFirstChild("HumanoidRootPart") then
                 local distance = (character.HumanoidRootPart.Position - obj.HumanoidRoot
                 local distance = (character.HumanoidRootPart.Position - obj.HumanoidRootPart.Position).Magnitude
-                if distance > 100 and not obj:IsDescendantOf(Players) then
+                if distance > 50 and not obj:IsDescendantOf(Players) then
                     obj.Parent = nil -- Xoá vật thể xa (Không xoá người chơi)
                 end
             end
@@ -161,12 +161,4 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(obj)
     RemoveExpNotification(obj)
 end)
 
--- 🔹 Làm mờ chữ trong game nhưng giữ nguyên UI
-
-for _, obj in pairs(workspace:GetDescendants()) do
-    if obj:IsA("TextLabel") or obj:IsA("TextButton") or obj:IsA("BillboardGui") then
-        obj.TextTransparency = 0.8 -- Làm mờ chữ trong game (0.8 là mức gần như không thể đọc)
-    end
-end
-
-print("✅Super Fix Lag")
+print("✅ Đã fix lag")
