@@ -4,7 +4,7 @@ local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
 local EffectsFolder = workspace:FindFirstChild("Effects") -- Nơi chứa hiệu ứng trong Blox Fruits
 
--- 🔹 Hàm xoá hiệu ứng trong game (Không xoá nhân vật)
+-- 🔹 Hàm xoá hiệu ứng trong game (Không ảnh hưởng nhân vật)
 local function RemoveEffects(obj)
     if obj:IsA("ParticleEmitter") or 
        obj:IsA("Beam") or 
@@ -19,22 +19,22 @@ local function RemoveEffects(obj)
     end
 end
 
--- 🔹 Xoá hiệu ứng có sẵn khi script chạy
+-- 🔹 Xoá hiệu ứng có sẵn ngay khi script chạy
 for _, obj in pairs(workspace:GetDescendants()) do
-    if not obj:IsDescendantOf(LocalPlayer.Character) then -- Không xoá hiệu ứng nhân vật
+    if not obj:IsDescendantOf(LocalPlayer.Character) then
         RemoveEffects(obj)
     end
 end
 
--- 🔹 Xoá hiệu ứng mới sinh ra liên tục
+-- 🔹 Xoá hiệu ứng mới xuất hiện liên tục
 workspace.DescendantAdded:Connect(function(obj)
     task.wait(0.1) -- Đợi hiệu ứng xuất hiện rồi mới xoá
-    if not obj:IsDescendantOf(LocalPlayer.Character) then -- Không xoá hiệu ứng nhân vật
+    if not obj:IsDescendantOf(LocalPlayer.Character) then
         RemoveEffects(obj)
     end
 end)
 
--- 🔹 Xoá hiệu ứng trong thư mục "Effects" của game Blox Fruits
+-- 🔹 Xoá hiệu ứng trong thư mục "Effects" của Blox Fruits
 if EffectsFolder then
     for _, effect in pairs(EffectsFolder:GetChildren()) do
         effect:Destroy()
@@ -62,8 +62,8 @@ Lighting.OutdoorAmbient = Color3.new(1,1,1)
 Lighting.FogEnd = 1000000 -- Xoá sương mù
 Lighting.Technology = Enum.Technology.Compatibility -- Xoá hiệu ứng bóng
 
--- 🔹 Fix lỗi bầu trời bị đen
-local sky = Lighting:FindFirstChildOfClass("Sky")
+-- 🔹 Xoá bầu trời nhưng không làm màn hình đen
+local sky = Lighting:FindFirstChild("Sky")
 if sky then
     sky:Destroy()
 end
@@ -71,7 +71,7 @@ end
 -- 🔹 Làm mất màu tất cả vật thể (Trừ nhân vật)
 for _, obj in pairs(workspace:GetDescendants()) do
     if obj:IsA("BasePart") and not obj:IsDescendantOf(LocalPlayer.Character) then
-        obj.Color = Color3.fromRGB(128, 128, 128) -- Xám
+        obj.Color = Color3.fromRGB(128, 128, 128) -- Màu xám
         obj.Material = Enum.Material.SmoothPlastic -- Làm mịn
     end
 end
@@ -93,9 +93,8 @@ RunService.RenderStepped:Connect(function()
     if character and character:FindFirstChild("HumanoidRootPart") then
         for _, obj in pairs(workspace:GetChildren()) do
             if obj:IsA("Model") and obj ~= character and obj:FindFirstChild("HumanoidRootPart") then
-                local distance = (character.HumanoidRootPart.Position - obj.HumanoidRoot
                 local distance = (character.HumanoidRootPart.Position - obj.HumanoidRootPart.Position).Magnitude
-                if distance > 50 and not obj:IsDescendantOf(Players) then
+                if distance > 100 and not obj:IsDescendantOf(Players) then
                     obj.Parent = nil -- Xoá vật thể xa (Không xoá người chơi)
                 end
             end
@@ -103,7 +102,7 @@ RunService.RenderStepped:Connect(function()
     end
 end)
 
--- 🔹 Làm vật thể không thể nhìn thấy nhưng vẫn va chạm được
+-- 🔹 Làm vật thể vô hình nhưng vẫn có thể va chạm
 for _, obj in pairs(workspace:GetDescendants()) do
     if obj:IsA("BasePart") and not obj:IsDescendantOf(LocalPlayer.Character) then
         obj.Transparency = 1 -- Làm vật thể vô hình
@@ -111,7 +110,7 @@ for _, obj in pairs(workspace:GetDescendants()) do
     end
 end
 
--- 🔹 Xoá tất cả vật thể mới xuất hiện nhưng vẫn va chạm được
+-- 🔹 Xoá tất cả vật thể mới xuất hiện nhưng vẫn có thể va chạm
 workspace.DescendantAdded:Connect(function(obj)
     task.wait(0.1)
     if obj:IsA("BasePart") and not obj:IsDescendantOf(LocalPlayer.Character) then
@@ -161,4 +160,4 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(obj)
     RemoveExpNotification(obj)
 end)
 
-print("✅ Đã fix lag")
+print("✅ Đã fix hoàn toàn lỗi, mọi vật thể mới xuất hiện đều bị xoá nhưng vẫn có thể va chạm!")
