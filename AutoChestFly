@@ -8,7 +8,7 @@ joinSound:Play()
 game.StarterGui:SetCore("SendNotification", {
     Title = "By : NomDom",
     Text = "Địt mẹ thằng lồn",
-    Duration = 2000
+    Duration = 1000000
 })
 
 local Notifications = game.ReplicatedStorage:WaitForChild("Notification")
