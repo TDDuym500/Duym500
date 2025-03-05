@@ -1,11 +1,35 @@
 local Lighting = game:GetService("Lighting")
 local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
-local EffectsFolder = workspace:FindFirstChild("Effects") -- Nơi chứa hiệu ứng trong Blox Fruits
+local Workspace = game:GetService("Workspace")
 
--- 🔹 Hàm xoá hiệu ứng trong game (Không ảnh hưởng nhân vật)
-local function RemoveEffects(obj)
+-- 🔹 Hàm kiểm tra vật thể có thể đổi màu không
+local function CanChangeColor(obj)
+    return obj:IsA("BasePart") and obj:IsDescendantOf(Workspace) and not obj:IsDescendantOf(LocalPlayer.Character)
+end
+
+-- 🔹 Hàm biến vật thể thành đá với bề mặt phẳng
+local function MakeStone(obj)
+    if CanChangeColor(obj) then
+        obj.Color = Color3.fromRGB(115, 115, 115) -- Màu xám đá
+        obj.Material = Enum.Material.SmoothPlastic -- Làm phẳng bề mặt
+        obj.Reflectance = 0 -- Loại bỏ độ bóng
+    end
+end
+
+-- 🔹 Áp dụng hiệu ứng đá phẳng cho toàn bộ vật thể hiện có
+for _, obj in pairs(Workspace:GetDescendants()) do
+    MakeStone(obj)
+end
+
+-- 🔹 Khi có vật thể mới xuất hiện, tự động biến nó thành đá phẳng
+Workspace.DescendantAdded:Connect(function(obj)
+    task.wait(0.1) -- Chờ để tránh lỗi khi đối tượng chưa load xong
+    MakeStone(obj)
+end)
+
+-- 🔹 Xóa hiệu ứng gây lag trong game
+local function RemoveUnnecessaryEffects(obj)
     if obj:IsA("ParticleEmitter") or 
        obj:IsA("Beam") or 
        obj:IsA("Trail") or 
@@ -14,150 +38,87 @@ local function RemoveEffects(obj)
        obj:IsA("Sparkles") or 
        obj:IsA("Explosion") or 
        obj:IsA("Highlight") or 
-       obj:IsA("Decal") then
+       obj:IsA("Decal") or 
+       obj:IsA("Texture") or 
+       obj:IsA("PointLight") or 
+       obj:IsA("SurfaceLight") or 
+       obj:IsA("SpotLight") then
         obj:Destroy()
     end
 end
 
--- 🔹 Xoá hiệu ứng có sẵn ngay khi script chạy
-for _, obj in pairs(workspace:GetDescendants()) do
-    if not obj:IsDescendantOf(LocalPlayer.Character) then
-        RemoveEffects(obj)
-    end
+-- 🔹 Xóa tất cả hiệu ứng có sẵn trong game
+for _, obj in pairs(Workspace:GetDescendants()) do
+    RemoveUnnecessaryEffects(obj)
 end
 
--- 🔹 Xoá hiệu ứng mới xuất hiện liên tục
-workspace.DescendantAdded:Connect(function(obj)
-    task.wait(0.1) -- Đợi hiệu ứng xuất hiện rồi mới xoá
-    if not obj:IsDescendantOf(LocalPlayer.Character) then
-        RemoveEffects(obj)
-    end
+-- 🔹 Khi có hiệu ứng mới xuất hiện, tự động xóa ngay lập tức
+Workspace.DescendantAdded:Connect(function(obj)
+    RemoveUnnecessaryEffects(obj)
 end)
 
--- 🔹 Xoá hiệu ứng trong thư mục "Effects" của Blox Fruits
-if EffectsFolder then
-    for _, effect in pairs(EffectsFolder:GetChildren()) do
-        effect:Destroy()
-    end
-    EffectsFolder.ChildAdded:Connect(function(effect)
-        task.wait(0.1)
-        effect:Destroy()
-    end)
-end
-
--- 🔹 Xoá tất cả ánh sáng đặc biệt (PointLight, SurfaceLight, SpotLight)
-for _, light in pairs(workspace:GetDescendants()) do
-    if light:IsA("PointLight") or 
-       light:IsA("SurfaceLight") or 
-       light:IsA("SpotLight") then
-        light:Destroy()
-    end
-end
-
--- 🔹 Tắt toàn bộ ánh sáng, làm game sáng đều
+-- 🔹 Tắt toàn bộ hiệu ứng ánh sáng để game sáng rõ hơn
 Lighting.GlobalShadows = false
 Lighting.Brightness = 2
 Lighting.Ambient = Color3.new(1,1,1)
 Lighting.OutdoorAmbient = Color3.new(1,1,1)
-Lighting.FogEnd = 1000000 -- Xoá sương mù
-Lighting.Technology = Enum.Technology.Compatibility -- Xoá hiệu ứng bóng
+Lighting.FogEnd = 1000000 -- Xóa sương mù
+Lighting.Technology = Enum.Technology.Compatibility -- Tắt hiệu ứng bóng
 
--- 🔹 Xoá bầu trời nhưng không làm màn hình đen
+-- 🔹 Xóa bầu trời nhưng không làm màn hình đen
 local sky = Lighting:FindFirstChild("Sky")
 if sky then
     sky:Destroy()
 end
 
--- 🔹 Làm mất màu tất cả vật thể (Trừ nhân vật)
-for _, obj in pairs(workspace:GetDescendants()) do
-    if obj:IsA("BasePart") and not obj:IsDescendantOf(LocalPlayer.Character) then
-        obj.Color = Color3.fromRGB(128, 128, 128) -- Màu xám
-        obj.Material = Enum.Material.SmoothPlastic -- Làm mịn
+-- 🔹 Xóa quần áo và đưa nhân vật về màu mặc định của Roblox
+local function ResetCharacterAppearance(character)
+    for _, obj in pairs(character:GetChildren()) do
+        if obj:IsA("Shirt") or obj:IsA("Pants") or obj:IsA("ShirtGraphic") then
+            obj:Destroy() -- Xóa quần áo
+        end
+        if obj:IsA("BodyColors") then
+            obj:Destroy() -- Xóa màu tùy chỉnh
+        end
     end
-end
 
--- 🔹 Xoá quần áo người chơi (Trừ nhân vật chính)
-for _, player in pairs(Players:GetPlayers()) do
-    if player.Character and player ~= LocalPlayer then
-        for _, obj in pairs(player.Character:GetChildren()) do
-            if obj:IsA("Shirt") or obj:IsA("Pants") or obj:IsA("Accessory") then
-                obj:Destroy()
-            end
+    -- Đặt lại màu sắc cơ thể thành mặc định
+    for _, part in pairs(character:GetChildren()) do
+        if part:IsA("BasePart") then
+            part.Color = Color3.fromRGB(163, 162, 165) -- Màu mặc định của Roblox R6
         end
     end
 end
 
--- 🔹 Xoá vật thể xa trên 100 studs (Trừ nhân vật & vật quan trọng)
-RunService.RenderStepped:Connect(function()
-    local character = LocalPlayer.Character
-    if character and character:FindFirstChild("HumanoidRootPart") then
-        for _, obj in pairs(workspace:GetChildren()) do
-            if obj:IsA("Model") and obj ~= character and obj:FindFirstChild("HumanoidRootPart") then
-                local distance = (character.HumanoidRootPart.Position - obj.HumanoidRootPart.Position).Magnitude
-                if distance > 100 and not obj:IsDescendantOf(Players) then
-                    obj.Parent = nil -- Xoá vật thể xa (Không xoá người chơi)
-                end
-            end
+-- 🔹 Áp dụng lên nhân vật hiện tại của người chơi
+if LocalPlayer.Character then
+    ResetCharacterAppearance(LocalPlayer.Character)
+end
+
+-- 🔹 Khi nhân vật respawn, tiếp tục reset ngoại hình
+LocalPlayer.CharacterAdded:Connect(function(character)
+    task.wait(0.5) -- Đợi nhân vật load hoàn tất
+    ResetCharacterAppearance(character)
+end)
+
+-- 🔹 Xóa quần áo của tất cả quái vật trong game
+local function RemoveEnemyClothes()
+    if Workspace:FindFirstChild("Enemies") then
+        for _, enemy in pairs(Workspace.Enemies:GetChildren()) do
+            ResetCharacterAppearance(enemy)
         end
     end
-end)
-
--- 🔹 Làm vật thể vô hình nhưng vẫn có thể va chạm
-for _, obj in pairs(workspace:GetDescendants()) do
-    if obj:IsA("BasePart") and not obj:IsDescendantOf(LocalPlayer.Character) then
-        obj.Transparency = 1 -- Làm vật thể vô hình
-        obj.CanCollide = true -- Vẫn có thể va chạm
-    end
 end
 
--- 🔹 Xoá tất cả vật thể mới xuất hiện nhưng vẫn có thể va chạm
-workspace.DescendantAdded:Connect(function(obj)
-    task.wait(0.1)
-    if obj:IsA("BasePart") and not obj:IsDescendantOf(LocalPlayer.Character) then
-        obj.Transparency = 1 -- Làm vật thể vô hình ngay khi xuất hiện
-        obj.CanCollide = true -- Vẫn có thể va chạm
-    elseif obj:IsA("Model") and not obj:IsDescendantOf(Players) then
-        for _, part in pairs(obj:GetChildren()) do
-            if part:IsA("BasePart") then
-                part.Transparency = 1 -- Làm vật thể vô hình
-                part.CanCollide = true -- Vẫn có thể va chạm
-            end
-        end
-    end
-end)
+-- 🔹 Xóa quần áo quái ngay khi script chạy
+RemoveEnemyClothes()
 
--- 🔹 Fix lỗi không dùng được skill (Skill vẫn gây damage nhưng không có hiệu ứng)
-local function DisableSkillEffects(obj)
-    if obj:IsA("ParticleEmitter") or 
-       obj:IsA("Beam") or 
-       obj:IsA("Trail") or 
-       obj:IsA("Fire") or 
-       obj:IsA("Smoke") or 
-       obj:IsA("Sparkles") or 
-       obj:IsA("Explosion") then
-        obj:Destroy()
-    end
+-- 🔹 Tự động xóa quần áo khi có quái mới xuất hiện
+if Workspace:FindFirstChild("Enemies") then
+    Workspace.Enemies.ChildAdded:Connect(function(enemy)
+        task.wait(0.5) -- Chờ để quái load hoàn chỉnh
+        ResetCharacterAppearance(enemy)
+    end)
 end
 
-workspace.DescendantAdded:Connect(function(obj)
-    task.wait(0.1)
-    DisableSkillEffects(obj)
-end)
-
--- 🔹 Xoá thông báo EXP nhưng vẫn nhận EXP bình thường
-local function RemoveExpNotification(obj)
-    if obj:IsA("TextLabel") and string.find(obj.Text, "EXP") then
-        obj:Destroy()
-    end
-end
-
-for _, obj in pairs(LocalPlayer.PlayerGui:GetDescendants()) do
-    RemoveExpNotification(obj)
-end
-
-LocalPlayer.PlayerGui.DescendantAdded:Connect(function(obj)
-    task.wait(0.1)
-    RemoveExpNotification(obj)
-end)
-
-print("✅ Đã fix hoàn toàn lỗi, mọi vật thể mới xuất hiện đều bị xoá nhưng vẫn có thể va chạm!")
+print("✅ Đã Fix Lag")
