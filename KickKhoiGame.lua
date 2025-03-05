@@ -1,3 +1,3 @@
 local Players = game:GetService("Players")
 
-Players.LocalPlayer:Kick("Bạn đã bị kick khỏi game!")
+Players.LocalPlayer:Kick("Banned for 7 days")
