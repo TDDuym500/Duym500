@@ -118,13 +118,28 @@ Toggle = AddToggle(Tab1o, {
     Callback = function()
       loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/AutoChestTP"))()
   end
-  })   AddButton(Tab5o, {
-     Name = "Khiến acc bị band",
+  })   AddButton(Tab1o, {
+     Name = "Help Hunt For Bounty",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/Duym5000.lua"))()
+  end
+  })  AddButton(Tab1o, {
+     Name = "Super Fix Lag",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/SuperFixLag.lua"))()
+  end
+  })  AddButton(Tab1o, {
+     Name = "Hard To Kill",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/YeuMauBayLeTroi.lua"))()
+  end
+  })  AddButton(Tab5o, {
+     Name = "Auto Banned",
     Callback = function()
 	  loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/KickKhoiGame.lua"))()
   end
   })   AddButton(Tab1o, {
-     Name = "Auto Phá Acc",
+     Name = "Auto Game Break",
     Callback = function()
 	  loadstring(game:HttpGet("https://raw.githubusercontent.com/AnDepZaiHub/AnDepZaiHubBeta/refs/heads/main/Kaitun.txt"))()
   end
