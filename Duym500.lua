@@ -108,7 +108,45 @@ Toggle = AddToggle(Tab1o, {
     Callback = function()
          loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/FastAttack.lua"))()
   end
-  })AddButton(Tab1o, {
+  })  AddButton(Tab1o, {
+     Name = "Join the Pirates",
+    Callback = function()
+      l--Auto Gia Nhập Phe
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+-- 🔹 Kiểm tra nếu có chức năng chuyển team trong game
+if ReplicatedStorage:FindFirstChild("Remotes") and ReplicatedStorage.Remotes:FindFirstChild("CommF_") then
+    -- 🔹 Gửi yêu cầu chuyển sang Hải Quân (Pirates)
+    ReplicatedStorage.Remotes.CommF_:InvokeServer("SetTeam", "Pirates")
+
+    -- 🔹 Thông báo đã chuyển team
+    print("✅ Đã tự động gia nhập Hải Quân!")
+else
+    print("⚠ Không tìm thấy Remote chuyển team, thử lại sau!")
+end
+  end
+  })    AddButton(Tab1o, {
+     Name = "Join the Marines",
+    Callback = function()
+      l--Auto Gia Nhập Phe
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+-- 🔹 Kiểm tra nếu có chức năng chuyển team trong game
+if ReplicatedStorage:FindFirstChild("Remotes") and ReplicatedStorage.Remotes:FindFirstChild("CommF_") then
+    -- 🔹 Gửi yêu cầu chuyển sang Hải Quân (Marines)
+    ReplicatedStorage.Remotes.CommF_:InvokeServer("SetTeam", "Marines")
+
+    -- 🔹 Thông báo đã chuyển team
+    print("✅ Đã tự động gia nhập Hải Quân!")
+else
+    print("⚠ Không tìm thấy Remote chuyển team, thử lại sau!")
+end
+  end
+  })   AddButton(Tab1o, {
      Name = "AutoChestFly",
     Callback = function()
       loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/AutoChestFly"))()
