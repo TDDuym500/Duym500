@@ -1,3 +1,47 @@
+--Auto Gia Nhập Phe
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+-- 🔹 Kiểm tra nếu có chức năng chuyển team trong game
+if ReplicatedStorage:FindFirstChild("Remotes") and ReplicatedStorage.Remotes:FindFirstChild("CommF_") then
+    -- 🔹 Gửi yêu cầu chuyển sang Hải Quân (Marines)
+    ReplicatedStorage.Remotes.CommF_:InvokeServer("SetTeam", "Marines")
+
+    -- 🔹 Thông báo đã chuyển team
+    print("✅ Đã tự động gia nhập Hải Quân!")
+else
+    print("⚠ Không tìm thấy Remote chuyển team, thử lại sau!")
+end
+
+
+
+wait(3) -- Dừng lại 3 giây
+
+-- Hiển thị thông báo
+game.StarterGui:SetCore("SendNotification", {
+    Title = "By : NomDom",
+    Text = "Địt mẹ thằng lồn",
+    Duration = 1000000
+})
+
+local Notifications = game.ReplicatedStorage:WaitForChild("Notification")
+for _, msg in pairs({
+    "<Color=Red>NomDom On Top<Color=/>",
+    "<Color=Green>Cảm ơn vì đã sử dụng<Color=/>",
+    "<Color=Yellow>Địt mẹ mày<Color=/>"
+}) do
+    require(Notifications).new(msg):Display()
+end
+local AutoCollectRunning = false
+local AutoCollectScript
+
+
+
+wait(2) -- Dừng lại 3 giây
+
+
+
 loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V2/refs/heads/main/UiREDzV2.lua")))()
 
        local Window = MakeWindow({
@@ -38,33 +82,46 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
      local Tab6o = MakeTab({Name = "Pet go"})
      
 -------TOGGLE 
+local AutoCollectRunning = false
+local AutoCollectScript
+Toggle = AddToggle(Tab1o, {
+    Name = "Auto Rejoin",
+    Default = false,
+    Callback = function(state)
+        AutoCollectRunning = state
+        
+        if AutoCollectRunning then
+            -- Bật script
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/Auto%20Rejoin%20Game"))()
+        else
+            -- Tắt script bằng cách reset nhân vật
+            game.Players.LocalPlayer.Character:BreakJoints()
+        end
 
-     Toggle = AddToggle(Tab1o, {
-      Name = "Chế độ đẹp zai",
-      Default = true,
-      Callback = function()
-      end
-     })
+        print("Auto Collect:", AutoCollectRunning and "Bật" or "Tắt")
+    end
+})
+
 ------- BUTTON
    AddButton(Tab1o, {
      Name = "FastAttack",
     Callback = function()
          loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/FastAttack.lua"))()
   end
+  })AddButton(Tab1o, {
+     Name = "AutoChestFly",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/AutoChestFly"))()
+  end
+  })AddButton(Tab1o, {
+     Name = "AutoChestTP",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/AutoChestTP"))()
+  end
   })   AddButton(Tab5o, {
      Name = "Khiến acc bị band",
     Callback = function()
-	  lloadstring(game:HttpGet("https://raw.githubusercontent.com/NewBetaLua/LilnhanHub/refs/heads/main/Script.lua", true))()
-  end
-  })    AddButton(Tab1o, {
-     Name = "Auto Hop Server Rip Indra",
-    Callback = function()
-	  loadstring(game:HttpGet("https://raw.githubusercontent.com/AnDepZaiHub/AnBeoDepTrai/refs/heads/main/Rip_Indra"))()
-  end
-  })   AddButton(Tab1o, {
-     Name = "Auto Hop Server Dough King",
-    Callback = function()
-	  loadstring(game:HttpGet("https://raw.githubusercontent.com/AnDepZaiHub/AnBeoDepTrai/refs/heads/main/Dough_King"))()
+	  loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/KickKhoiGame.lua"))()
   end
   })   AddButton(Tab1o, {
      Name = "Auto Phá Acc",
@@ -209,153 +266,12 @@ repeat task.wait() pcall(function() loadstring(game:HttpGet("https://raw.githubu
   })    AddButton(Tab3o, {
      Name = "Kaitun RoyX Hub",
     Callback = function()
-	  getgenv().ConfigsKaitun = {
-	["Safe Mode"] = false, -- Will be pass all anti cheat (but slow farm)
-	
-	["Melee"] = {
-		["Death Step"] = true,
-		["Electric Claw"] = true,
-		["Dragon Talon"] = true,
-		["Sharkman Karate"] = true,
-		["Superhuman"] = true,
-		["God Human"] = true,
-	},
-
-	["Sword"] = {
-		-- : World 1
-		["Saber"] = true,
-		["Pole"] = false,
-		-- : World 2
-		["Midnight Blade"] = true,
-		["Shisui"] = true,
-		["Saddi"] = true,
-		["Wando"] = true,
-		["Rengoku"] = true,
-		["True Triple Katana"] = true,
-		-- : World 3
-		["Yama"] = true,
-		["Tushita"] = true,
-		["Canvander"] = true,
-		["Buddy Sword"] = true,
-		["Twin Hooks"] = true,
-		["Hallow Scythe"] = true,
-		["Cursed Dual Katana"] = true,
-	},
-
-	["Gun"] = {
-		-- : World 2
-		["Kabucha"] = true,
-		-- : World 3
-		["Venom Bow"] = true,
-		["Skull Guitar"] = true,
-	},
-
-	["Mastery"] = {
-		["Melee"] = true,
-		["Sword"] = true,
-		["Devil Fruits"] = true,
-
-		["Configs"] = {
-			["Selected All Sword"] = true,
-			["Select Sword"] = {"Saber","Cursed Dual Katana"},
-		}
-	},
-
-	["Race"] = {
-		["v2"] = true,
-		["v3"] = true,
-		["Locked"] = {
-			["Mink"] = true,
-			["Human"] = true,
-			["Skypiea"] = true,
-			["Fishman"] = true,
-		},
-	},
-
-	["Fruit"] = {
-		["Main Fruit"] = {"Dough-Dough"},
-		["Sec Fruit"] = {"Flame-Flame", "Ice-Ice", "Quake-Quake", "Light-Light", "Dark-Dark", "Spider-Spider", "Rumble-Rumble", "Magma-Magma", "Buddha-Buddha"},
-		["Safe Fruit"] = {
-			"Dough-Dough",
-			"Dragon-Dragon"
-		},
-	},
-
-	["Quest"] = {
-		["Rainbow Haki"] = true,
-		["Pull Lever"] = true,
-		["Musketeer Hat"] = true,
-		["Dough Mirror"] = true,
-		["Shark Anchor"] = {
-			["Enable"] = true,
-			["Money"] = 25_000_000,
-		},
-	},
-
-	["Currency"] = {
-		["Lock Fragment"] = 30_000,
-	},
-
-	["Performance"] = {
-		["White Screen"] = false,
-		["Booster FPS"] = false,
-		["Lock FPS"] = 240,
-		["AFK Timeout"] = 150,
-	},
-}
-loadstring(game:HttpGet("https://api.realaya.xyz/v1/files/l/73mkp0aqyfo4ypy8hvl0nz10lq49fey5.lua"))()
+	  loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/RoyX%20Kaitun"))()
   end
   })    AddButton(Tab3o, {
      Name = "Kaitun Simple Hub",
     Callback = function()
-	  getgenv().simple_settings = {
-    ["MASTERY"] = { -- Settings related to leveling up weapon or skill mastery
-        ["ACTIVE"] = true, -- Enable or disable mastery leveling (true = enabled, false = disabled)
-        ["METHOD"] = "Half", -- Method for gaining mastery, "Half"[350] or "Full"[600]
-    },
-
-    ["RAID"] = {
-        ["MODE"] = "Legit", -- Legit / KillAura (Legit mode is Mob aura in raid)
-    },
-
-    ["OBJECTIVE"] = { -- Goals for farming and unlocking features
-        ["GODHUMAN"] = true, -- Automatically unlock the "Godhuman" fighting style
-        ["RACE-CONFIGURE"] = {
-            ["RACE"] = {"Human", "Skypiea", "Fishman", "Mink"}, -- List -- "Human", "Skypiea", "Fishman", "Mink"
-            ["RACE-LOCK"] = true, -- Automatically change the character race if not in the list
-            ["RACE-V3"] = true, -- Automatically upgrade character race to V3 if possible Human, Mink, (Fishman, Ghoul, Cyborg) soon
-        },
-        ["FRAGMENT"] = 100000, -- Limit number of fragments to collect
-
-        -- SWORD
-        ["CANVANDER"] = true,
-        ["BUDDY-SWORD"] = true,
-        ["CURSED-DUAL-KATANA"] = true,
-        ["SHARK-ANCHOR"] = true,
-
-        --GUN
-        ["ACIDUM-RIFLE"] = true,
-        ["VENOM-BOW"] = true,
-        ["SOUL-GUITAR"] = true,
-
-        -- AURA
-        ["COLOR-HAKI"] = {"Pure Red","Winter Sky","Snow White"}, -- Aura color to craft
-    },
-
-    ["FRUITPURCHASE"] = true, -- Automatically purchase fruits based on priority list
-    ["PRIORITYFRUIT"] = { -- List of preferred fruits to purchase or eat in order of priority
-        [1] = "Dragon-Dragon",
-        [2] = "Dough-Dough",
-        [3] = "Flame-Flame",
-        [4] = "Rumble-Rumble",
-        [5] = "Human-Human: Buddha",
-        [6] = "Dark-Dark",
-    },
-
-    ["FPSCAP"] = 30, -- Limit the frame rate to optimize performance
-    ["LOWTEXTURE"] = true -- Reduce graphic quality for better performance
-}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/simple-hubs/contents/refs/heads/main/bloxfruit-kaitan-main.lua"))()
+	  loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/RoyX%20Kaitun"))()
   end
   })    AddButton(Tab2o, {
      Name = "HoHo Hub(cần key)",
@@ -444,3 +360,4 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BlueX/BlueX-Hub/r
 ----- Paragraph 
                     
    Paragraph = AddParagraph(Farm, {"", "Wait Update"})
+
