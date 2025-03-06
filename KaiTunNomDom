@@ -1,3 +1,53 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/FastAttack.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/SuperFixLag.lua"))()
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local ChatEvent = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
+if not ChatEvent then
+    warn("Không tìm thấy DefaultChatSystemChatEvents!")
+    return
+end
+
+local function spamChat(message, delayTime)
+    while true do
+        ChatEvent.SayMessageRequest:FireServer(message, "All")
+        task.wait(delayTime)
+    end
+end
+
+spawn(function()
+    spamChat("Kaitun Blox Kid By NomDom Hub 🚀", 5) -- Gửi mỗi 5 giây
+end)
+
+local ScreenGui = Instance.new("ScreenGui")
+local TextLabel = Instance.new("TextLabel")
+
+-- Gán ScreenGui vào PlayerGui để hiển thị trên màn hình
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Cài đặt thuộc tính cho TextLabel
+TextLabel.Parent = ScreenGui
+TextLabel.Text = "KaiTun Blox Kid By NomDom Hub"
+TextLabel.Size = UDim2.new(0.5, 0, 0.1, 0) -- Kích thước chữ
+TextLabel.Position = UDim2.new(0.25, 0, 0.3, 0) -- Hiển thị gần giữa màn hình
+TextLabel.BackgroundTransparency = 1 -- Xóa nền
+TextLabel.TextStrokeTransparency = 0 -- Viền chữ rõ ràng
+TextLabel.TextScaled = true -- Tự chỉnh kích thước chữ cho vừa
+TextLabel.Font = Enum.Font.SourceSansBold -- Kiểu chữ
+
+-- Hàm đổi màu cầu vồng liên tục
+spawn(function()
+    while true do
+        for i = 0, 1, 0.01 do
+            TextLabel.TextColor3 = Color3.fromHSV(i, 1, 1) -- Chuyển màu cầu vồng
+            wait(0.05) -- Tốc độ đổi màu (giảm để nhanh hơn, tăng để chậm hơn)
+        end
+    end
+end)
+
+
 getgenv().ConfigsKaitun = {
 	["Safe Mode"] = false, -- Will be pass all anti cheat (but slow farm)
 	
@@ -87,8 +137,8 @@ getgenv().ConfigsKaitun = {
 
 	["Performance"] = {
 		["White Screen"] = false,
-		["Booster FPS"] = false,
-		["Lock FPS"] = 240,
+		["Booster FPS"] = true,
+		["Lock FPS"] = 25,
 		["AFK Timeout"] = 150,
 	},
 }
