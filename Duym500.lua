@@ -111,7 +111,7 @@ Toggle = AddToggle(Tab1o, {
   })  AddButton(Tab1o, {
      Name = "Join the Pirates",
     Callback = function()
-      l--Auto Gia Nhập Phe
+      --Auto Gia Nhập Phe
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -130,7 +130,7 @@ end
   })    AddButton(Tab1o, {
      Name = "Join the Marines",
     Callback = function()
-      l--Auto Gia Nhập Phe
+      --Auto Gia Nhập Phe
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
