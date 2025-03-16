@@ -42,7 +42,7 @@ wait(2) -- Dừng lại 3 giây
 
 
 
-loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V2/refs/heads/main/UiREDzV2.lua")))()
+loadstring(game:HttpGet(("https://raw.githubusercontent.com/TDDuym500/UiHack/refs/heads/main/UiREDzV2.lua")))()
 
        local Window = MakeWindow({
          Hub = {
@@ -65,7 +65,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
   })
 
        MinimizeButton({
-       Image = "http://www.roblox.com/asset/?id=128933802535491",
+       Image = "http://www.roblox.com/asset/?id=86321368825608",
        Size = {50, 50},
        Color = Color3.fromRGB(10, 10, 10),
        Corner = true,
@@ -413,4 +413,3 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BlueX/BlueX-Hub/r
 ----- Paragraph 
                     
    Paragraph = AddParagraph(Farm, {"", "Wait Update"})
-
