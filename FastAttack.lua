@@ -1,6 +1,21 @@
+-- Hiển thị thông báo
+game.StarterGui:SetCore("SendNotification", {
+    Title = "By : NomDom",
+    Text = "Địt mẹ thằng lồn",
+    Duration = 100
+})
+
+local Notifications = game.ReplicatedStorage:WaitForChild("Notification")
+for _, msg in pairs({
+    "<Color=Red>NomDom On Top<Color=/>",
+    "<Color=Green>Xin chào vì đã sử dụng<Color=/>",
+    "<Color=Yellow>Dùng đi nha<Color=/>"
+}) do
+    require(Notifications).new(msg):Display()
+end
 local module = {
     NextAttack = 0,
-    AttackCooldown = 0.1, -- Thời gian chờ giữa các đòn đánh
+    AttackCooldown = 0.01, -- Thời gian chờ giữa các đòn đánh
     Distance = 55,
     attackMobs = true,
     attackPlayers = true
