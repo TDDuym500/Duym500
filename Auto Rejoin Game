@@ -1,20 +1,2 @@
-local TeleportService = game:GetService("TeleportService")
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-
--- 🔹 Khi mất kết nối hoặc bị kick, tự động rejoin
-LocalPlayer.OnTeleport:Connect(function(status)
-    if status == Enum.TeleportState.Failed then
-        wait(2) -- Chờ 2 giây trước khi thử lại
-        TeleportService:Teleport(game.PlaceId, LocalPlayer)
-    end
-end)
-
--- 🔹 Auto rejoin sau khi bị kick khỏi game
-LocalPlayer.OnKick:Connect(function(reason)
-    print("Bị kick, lý do:", reason)
-    wait(3) -- Chờ 3 giây để tránh bị khóa teleport
-    TeleportService:Teleport(game.PlaceId, LocalPlayer)
-end)
-
-print("✅ Auto Rejoin đã kích hoạt!")
+------Địt mẹ thằng chó Tuấn Anh IOS skid code của tao 
+------Skid mẹ mày đi này 
