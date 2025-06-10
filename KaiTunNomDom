@@ -1,3 +1,7 @@
+----Skid code con mẹ mày đi share thoải mái code này ai cx làm đc thk chó ngu như m mới đo skid
+
+
+
 loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/FastAttack.lua"))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/TDDuym500/Duym500/refs/heads/main/SuperFixLag.lua"))()
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
