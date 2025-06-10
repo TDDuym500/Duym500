@@ -1,4 +1,7 @@
-	  getgenv().ConfigsKaitun = {
+-----THk buồi đồi skid code t
+
+
+getgenv().ConfigsKaitun = {
 	["Safe Mode"] = false, -- Will be pass all anti cheat (but slow farm)
 	
 	["Melee"] = {
