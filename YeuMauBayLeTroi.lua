@@ -1,3 +1,5 @@
+----Skid con mẹ mày đi anh cho em đấy
+
 --// Dịch vụ cần thiết
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
