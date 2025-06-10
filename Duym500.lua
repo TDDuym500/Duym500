@@ -1,3 +1,11 @@
+-----------------Skid con cụ mày đi
+
+
+
+
+
+
+
 --Auto Gia Nhập Phe
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
